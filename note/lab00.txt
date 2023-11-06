@@ -1,0 +1,5 @@
+ls lists all the files and folders in the current directory
+cd change directory
+mkdir make a new directory
+cd.. parent directory
+python3 ok --local check the program
