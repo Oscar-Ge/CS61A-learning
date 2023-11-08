@@ -3,4 +3,11 @@ cd change directory
 mkdir make a new directory
 cd.. parent directory
 python3 ok --local check the program
-git push origin master
+github update:
+git clone xxx(SSH)
+git clone git@github.com:Oscar-Ge/CS61A-learning.git
+cd 到目录(if have been in the dict, you can )
+git init
+git add .
+git commit -m "submit"
+git push

@@ -29,3 +29,20 @@ to the arguments that are the values of the operands
 **Most important two things I’ll say all day:**
 1. An environment is a sequence of frames.
 2. A name evaluates to the value bound to that name in the earliest frame of the current environment in which that name is found.
+
+
+
+Exercise:
+
+What is the value of the final expression in this sequence? 
+
+`f = min `
+
+ `f = max `
+
+ `g, h = min, max `
+
+`max = g `
+
+`max(f(2, g(h(1, 5), 3)), 4)`
+
