@@ -3,3 +3,4 @@ cd change directory
 mkdir make a new directory
 cd.. parent directory
 python3 ok --local check the program
+git push origin master
