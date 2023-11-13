@@ -23,7 +23,16 @@ def roll_dice(num_rolls, dice=six_sided):
     assert num_rolls > 0, 'Must roll at least once.'
     # BEGIN PROBLEM 1
     "*** YOUR CODE HERE ***"
-    # END PROBLEM 1
+    sum = 0
+    while num_rolls != 0:
+        ans = dice()
+        if ans == 1 or sum == 1:
+            sum = 1
+        else:
+            sum += ans
+        num_rolls -= 1
+    return sum
+    # END PROBLEM 1 test passed
 
 
 def free_bacon(score):
@@ -37,7 +46,9 @@ def free_bacon(score):
     # Trim pi to only (score + 1) digit(s)
     # BEGIN PROBLEM 2
     "*** YOUR CODE HERE ***"
-    # END PROBLEM 2
+    remainder=10**(100-score)
+    pi=pi//remainder
+    # END PROBLEM 2 test passed
 
     return pi % 10 + 3
 
@@ -57,7 +68,12 @@ def take_turn(num_rolls, opponent_score, dice=six_sided):
     assert opponent_score < 100, 'The game should be over.'
     # BEGIN PROBLEM 3
     "*** YOUR CODE HERE ***"
-    # END PROBLEM 3
+    sum=0
+    if num_rolls == 0:
+        return free_bacon(opponent_score)
+    else:
+        return roll_dice(num_rolls, dice)
+    # END PROBLEM 3 test passed
 
 
 def extra_turn(player_score, opponent_score):
