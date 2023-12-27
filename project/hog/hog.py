@@ -12,17 +12,6 @@ FIRST_101_DIGITS_OF_PI = 3141592653589793238462643383279502884197169399375105820
 
 
 def roll_dice(num_rolls, dice=six_sided):
-    """Simulate rolling the DICE exactly NUM_ROLLS > 0 times. Return the sum of
-    the outcomes unless any of the outcomes is 1. In that case, return 1.
-
-    num_rolls:  The number of dice rolls that will be made.
-    dice:       A function that simulates a single dice roll outcome.
-    """
-    # These assert statements ensure that num_rolls is a positive integer.
-    assert type(num_rolls) == int, 'num_rolls must be an integer.'
-    assert num_rolls > 0, 'Must roll at least once.'
-    # BEGIN PROBLEM 1
-    "*** YOUR CODE HERE ***"
     sum = 0
     while num_rolls != 0:
         ans = dice()
@@ -32,92 +21,46 @@ def roll_dice(num_rolls, dice=six_sided):
             sum += ans
         num_rolls -= 1
     return sum
-    # END PROBLEM 1 test passed
-
-
 def free_bacon(score):
-    """Return the points scored from rolling 0 dice (Free Bacon).
-
-    score:  The opponent's current score.
-    """
     assert score < 100, 'The game should be over.'
     pi = FIRST_101_DIGITS_OF_PI
-
-    # Trim pi to only (score + 1) digit(s)
-    # BEGIN PROBLEM 2
-    "*** YOUR CODE HERE ***"
     remainder=10**(100-score)
     pi=pi//remainder
-    # END PROBLEM 2 test passed
-
     return pi % 10 + 3
-
-
 def take_turn(num_rolls, opponent_score, dice=six_sided):
-    """Simulate a turn rolling NUM_ROLLS dice, which may be 0 (Free Bacon).
-    Return the points scored for the turn by the current player.
-
-    num_rolls:       The number of dice rolls that will be made.
-    opponent_score:  The total score of the opponent.
-    dice:            A function that simulates a single dice roll outcome.
-    """
-    # Leave these assert statements here; they help check for errors.
     assert type(num_rolls) == int, 'num_rolls must be an integer.'
     assert num_rolls >= 0, 'Cannot roll a negative number of dice in take_turn.'
     assert num_rolls <= 10, 'Cannot roll more than 10 dice.'
     assert opponent_score < 100, 'The game should be over.'
-    # BEGIN PROBLEM 3
-    "*** YOUR CODE HERE ***"
     sum=0
     if num_rolls == 0:
         return free_bacon(opponent_score)
     else:
         return roll_dice(num_rolls, dice)
-    # END PROBLEM 3 test passed
-
-
 def extra_turn(player_score, opponent_score):
-    """Return whether the player gets an extra turn."""
     return (pig_pass(player_score, opponent_score) or
             swine_align(player_score, opponent_score))
-
-
 def swine_align(player_score, opponent_score):
-    """Return whether the player gets an extra turn due to Swine Align.
-
-    player_score:   The total score of the current player.
-    opponent_score: The total score of the other player.
-
-    >>> swine_align(30, 45)  # The GCD is 15.
-    True
-    >>> swine_align(35, 45)  # The GCD is 5.
-    False
-    """
-    # BEGIN PROBLEM 4a
-    "*** YOUR CODE HERE ***"
-    # END PROBLEM 4a
+    m=max(player_score, opponent_score)
+    n=min(player_score, opponent_score)
+    if n==0:
+        return False
+    r=m%n
+    while r!=0:
+        m=n
+        n=r
+        r=m%n
+    if n>=10:
+        return True
+    else:
+        return False
 
 
 def pig_pass(player_score, opponent_score):
-    """Return whether the player gets an extra turn due to Pig Pass.
-
-    player_score:   The total score of the current player.
-    opponent_score: The total score of the other player.
-
-    >>> pig_pass(9, 12)
-    False
-    >>> pig_pass(10, 12)
-    True
-    >>> pig_pass(11, 12)
-    True
-    >>> pig_pass(12, 12)
-    False
-    >>> pig_pass(13, 12)
-    False
-    """
-    # BEGIN PROBLEM 4b
-    "*** YOUR CODE HERE ***"
-    # END PROBLEM 4b
+    if player_score < opponent_score and opponent_score - player_score < 3:
+        return True
+    else:
+        return False
 
 
 def other(who):
@@ -156,11 +99,22 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     who = 0  # Who is about to take a turn, 0 (first) or 1 (second)
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
-    # END PROBLEM 5
-    # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
-    # BEGIN PROBLEM 6
-    "*** YOUR CODE HERE ***"
-    # END PROBLEM 6
+    while score0<goal and score1<goal:
+        if who==0:
+            n=strategy0(score0,score1)
+            score0+=take_turn(n, score1, dice)
+            if extra_turn(score0, score1)==True:
+                who=0
+            else:
+                who=1
+        elif who==1:
+            n=strategy1(score1,score0)
+            score1+=take_turn(n, score0, dice)
+            if extra_turn(score1, score0)==True:
+                who=1
+            else:
+                who=0
+        say=say(score0, score1)
     return score0, score1
 
 
@@ -244,6 +198,26 @@ def announce_highest(who, last_score=0, running_high=0):
     assert who == 0 or who == 1, 'The who argument should indicate a player.'
     # BEGIN PROBLEM 7
     "*** YOUR CODE HERE ***"
+    def highest(score0, score1):
+        if who==0:
+            running_high0=running_high
+            last_score0=last_score
+            delscore0=score0-last_score0
+            if delscore0 > running_high:
+                print(delscore0, 'point(s)! The most yet for Player 0')
+                running_high0=delscore0
+            last_score0=score0
+            return announce_highest(0, last_score0, running_high0)  
+        elif who==1:
+            running_high1=running_high
+            last_score1=last_score
+            delscore1=score1-last_score1
+            if delscore1 > running_high1:
+                print(delscore1, 'point(s)! The most yet for Player 1')
+                running_high1=delscore1
+            last_score1=score1
+            return announce_highest(1, last_score1, running_high1)   
+    return highest
     # END PROBLEM 7
 
 

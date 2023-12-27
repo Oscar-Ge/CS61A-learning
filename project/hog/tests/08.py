@@ -5,7 +5,7 @@ test = {
     {
       'cases': [
         {
-          'answer': '5eaa55d4501ab70024842f25d9ae70c4',
+          'answer': 'It both takes in a function as an argument and returns a function',
           'choices': [
             'It takes in a function as an argument',
             'It returns a function',
@@ -13,18 +13,18 @@ test = {
             'It uses the *args keyword'
           ],
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'question': 'What makes make_averaged a higher order function?'
         },
         {
-          'answer': '159f99fb0e6b0dae968c6b227fa282ee',
+          'answer': 'An arbitrary amount, which is why we need to use *args to call it',
           'choices': [
             'None',
             'Two',
             'An arbitrary amount, which is why we need to use *args to call it'
           ],
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'question': 'How many arguments does the function passed into make_averaged take?'
         }
       ],
@@ -39,11 +39,10 @@ test = {
           >>> averaged_dice = make_averaged(dice, 1000)
           >>> # Average of calling dice 1000 times
           >>> averaged_dice()
-          ae54f398e6c98b4c11197ca202bbf4fb
-          # locked
+          3.75
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""
