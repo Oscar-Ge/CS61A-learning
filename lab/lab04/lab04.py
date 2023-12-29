@@ -19,6 +19,10 @@ def skip_add(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    if n<1:
+        return 0
+    else:
+        return n+skip_add(n-2)
 
 
 def summation(n, term):
@@ -41,6 +45,10 @@ def summation(n, term):
     """
     assert n >= 1
     "*** YOUR CODE HERE ***"
+    if n==1:
+        return term(1)
+    else:
+        return term(n)+summation(n-1, term)
 
 
 def paths(m, n):
@@ -57,6 +65,10 @@ def paths(m, n):
     1
     """
     "*** YOUR CODE HERE ***"
+    if n==1 or m==1:
+        return 1
+    else:
+        return paths(m-1, n) + paths(m, n-1)
 
 
 
@@ -105,7 +117,28 @@ def max_subseq(n, t):
     5
     """
     "*** YOUR CODE HERE ***"
+    s=str(n)
+    def dfs(r, l=0, ans=0):
+        ma=int(s[l])-int('0')
+        temp=l
+        for i in range(l+1, r+1):
+            if int(s[i])-int('0')>ma:
+                ma=int(s[i])-int('0')
+                temp=i
+        if r==len(s)-1:
+            return ans*10+ma
+        return dfs(r+1,temp+1,ans*10+ma)
+    if t==0:
+        return 0
+    if len(s)<=t:
+        return n
+    else:
+        return dfs(len(s)-t)
+    
+    
 
+    
+    
 
 def add_chars(w1, w2):
     """
@@ -134,4 +167,18 @@ def add_chars(w1, w2):
     True
     """
     "*** YOUR CODE HERE ***"
-
+    def helper(w111, w222, w3, num=0):
+        if len(w111)==0 or len(w222)==0:
+            w3=w3+w222[num:]
+            return w3
+        if w111[0]==w222[num]:
+            if len(w111)==1:
+                w3=w3+w222[num+1:]
+                return w3
+            else:
+                w11=w111[1:]
+                w22=w222[:num]+w222[num+1:]
+                return helper(w11, w22, w3, num)
+        else:
+            return helper(w111, w222, w3+w222[num:num+1], num+1) 
+    return helper(w1, w2, '')
