@@ -154,13 +154,18 @@ def berry_finder(t):
     True
     """
     "*** YOUR CODE HERE ***"
-    for i in t:
-        if i=='berry':
+    if t==['berry']:
+        return True
+    if not is_tree(t):
+        if t=='berry':
             return True
-        elif type(i)==list:
-            return berry_finder(i)
-        else:
-            return False
+    for i in t:
+        if i==['berry'] or i=='berry':
+            return True
+        elif is_tree(i):
+            if berry_finder(i)==True:
+                return berry_finder(i)
+    return False
 
 
 def sprout_leaves(t, leaves):
@@ -197,8 +202,12 @@ def sprout_leaves(t, leaves):
           2
     """
     "*** YOUR CODE HERE ***"
+    if is_leaf(t):
+        return tree(label(t),[tree(leaf) for leaf in leaves])
+    return tree(label(t), [sprout_leaves(s, leaves) for s in branches(t)])
 
 # Abstraction tests for sprout_leaves and berry_finder
+
 def check_abstraction():
     """
     There's nothing for you to do for this function, it's just here for the extra doctest
@@ -245,6 +254,7 @@ def check_abstraction():
           2
     >>> change_abstraction(False)
     """
+
 
 
 def coords(fn, seq, lower, upper):

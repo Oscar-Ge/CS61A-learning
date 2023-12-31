@@ -170,9 +170,6 @@ def pawssible_patches(start, goal, limit):
         if ans1-ans==0:
             s+=1
         return(s, g, )'''
-    # If the length difference is greater than the limit, return a large number
-    if abs(len(start) - len(goal)) > limit:
-        return float('inf')
     # Create a 2D array to store the minimum edit distances
     dp = [[0] * (len(goal) + 1) for _ in range(len(start) + 1)]
     # Initialize the first row and column
@@ -183,14 +180,11 @@ def pawssible_patches(start, goal, limit):
     # Fill in the DP table
     for i in range(1, len(start) + 1):
         for j in range(1, len(goal) + 1):
+            dp[i][j] = 1 + min(dp[i - 1][j],dp[i][j - 1])
             if start[i - 1] == goal[j - 1]:
-                dp[i][j] = dp[i - 1][j - 1]
+                dp[i][j] = min(dp[i - 1][j - 1], dp[i][j])
             else:
-                dp[i][j] = 1 + min(dp[i - 1][j],      # Remove
-                                  dp[i][j - 1],      # Add
-                                  dp[i - 1][j - 1])  # Substitute
-            if dp[i][j] > limit:
-                return float('inf')
+                dp[i][j]=min(dp[i-1][j-1]+1,dp[i][j])
     # The minimum edit distance is at the bottom-right cell
     return dp[len(start)][len(goal)]
 
