@@ -265,7 +265,7 @@ def coords(fn, seq, lower, upper):
     [[-2, 4], [1, 1], [3, 9]]
     """
     "*** YOUR CODE HERE ***"
-    return ______
+    return [[b, fn(b)]for b in seq if (fn(b)<= upper and fn(b)>=lower)]
 
 
 def riffle(deck):
@@ -278,7 +278,8 @@ def riffle(deck):
     [0, 10, 1, 11, 2, 12, 3, 13, 4, 14, 5, 15, 6, 16, 7, 17, 8, 18, 9, 19]
     """
     "*** YOUR CODE HERE ***"
-    return _______
+    m=deck//2
+    
 
 
 def add_trees(t1, t2):

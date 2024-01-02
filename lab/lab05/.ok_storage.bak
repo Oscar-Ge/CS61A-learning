@@ -4,3 +4,4 @@
 'check_city_abstraction-correct', (1536, 66)
 'berry_finder-correct', (2048, 66)
 'sprout_leaves-correct', (2560, 66)
+'coords-correct', (3072, 66)
